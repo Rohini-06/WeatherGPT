@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Optional, List, Dict, Any
 import httpx
-
 app = FastAPI()
 
 app.add_middleware(
@@ -52,6 +53,97 @@ async def search_location(name: str):
 
     except Exception as exc:
         return {"error": str(exc)}
+    from pydantic import BaseModel
+from typing import Optional, List, Dict, Any
+
+
+class ChatRequest(BaseModel):
+    question: str
+    location: Optional[str] = ""
+    weather: Optional[Dict[str, Any]] = None
+    messages: Optional[List[Dict[str, str]]] = []
+
+
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    try:
+        weather_info = request.weather or {}
+
+        current = weather_info.get("current", {})
+        daily = weather_info.get("daily", {})
+        hourly = weather_info.get("hourly", {})
+
+        prompt = f"""
+You are WeatherGPT, an AI weather assistant.
+
+Current location:
+{request.location}
+
+Current weather:
+{current}
+
+7-day forecast:
+{daily}
+
+Hourly forecast:
+{hourly}
+
+User question:
+{request.question}
+
+Answer naturally and clearly.
+
+Rules:
+- Answer based on the supplied weather data.
+- If the user asks about rain, travel, outdoor activities, bikes, farming,
+  marine conditions, or safety, give practical advice when relevant.
+- Give weather alerts only when they are relevant to the question.
+- Do not add unrelated warnings to every answer.
+- If the requested information is not available in the supplied weather data,
+  clearly say that it is not available.
+- Keep the answer concise and easy to understand.
+"""
+
+        ollama_payload = {
+            "model": "llama3.2:3b",
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are WeatherGPT, a helpful weather assistant."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            "stream": False,
+            "options": {
+                "temperature": 0.4
+            }
+        }
+
+        async with httpx.AsyncClient(timeout=120) as client:
+            response = await client.post(
+                "http://127.0.0.1:11434/api/chat",
+                json=ollama_payload
+            )
+
+            response.raise_for_status()
+
+            data = response.json()
+
+        answer = data.get("message", {}).get(
+            "content",
+            "Sorry, I could not generate a response."
+        )
+
+        return {"answer": answer}
+
+    except Exception as exc:
+        print("AI Error:", str(exc))
+        return {
+            "error": str(exc)
+        }
 
 
 @app.get("/weather")
