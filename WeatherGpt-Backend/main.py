@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 import httpx
+import os
+from google import genai
 app = FastAPI()
 
 app.add_middleware(
@@ -53,8 +55,7 @@ async def search_location(name: str):
 
     except Exception as exc:
         return {"error": str(exc)}
-    from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+    
 
 
 class ChatRequest(BaseModel):
@@ -104,40 +105,25 @@ Rules:
 - Keep the answer concise and easy to understand.
 """
 
-        ollama_payload = {
-            "model": "llama3.2:3b",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are WeatherGPT, a helpful weather assistant."
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            "stream": False,
-            "options": {
-                "temperature": 0.4
+        api_key = os.getenv("GEMINI_API_KEY")
+
+        if not api_key:
+            return {
+                "error": "GEMINI_API_KEY is not configured on the server."
             }
-        }
 
-        async with httpx.AsyncClient(timeout=120) as client:
-            response = await client.post(
-                "http://127.0.0.1:11434/api/chat",
-                json=ollama_payload
-            )
+        client = genai.Client(api_key=api_key)
 
-            response.raise_for_status()
-
-            data = response.json()
-
-        answer = data.get("message", {}).get(
-            "content",
-            "Sorry, I could not generate a response."
+        response = client.models.generate_content(
+            model="gemini-3.6-flash",
+            contents=prompt
         )
 
-        return {"answer": answer}
+        answer = response.text
+
+        return {
+            "answer": answer
+        }
 
     except Exception as exc:
         print("AI Error:", str(exc))
