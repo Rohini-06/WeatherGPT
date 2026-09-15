@@ -1,119 +1,131 @@
-index(3).html
-File
-package(1).json
-File
-package-lock(1).json
-File
-README(1).md
-File
-main(1).py
-Python
-main(1).jsx
-JavaScript
-styles.css
-File
-index(4).html
-File
-package(2).json
-File
-package-lock(2).json
-File
-README(2).md
-File
+# 🌦️ WeatherGPT
 
-Next index.html-la major modification thevai illa Rohi. 👍
+WeatherGPT is an AI-powered weather application that provides real-time weather information, forecasts, location-based weather search, multilingual support, and intelligent weather guidance.
 
-Existing index.html already correct-a irukku:
+It combines a modern React frontend, FastAPI backend, Open-Meteo weather APIs, and local AI using Ollama to provide a conversational weather experience.
 
-<div id="root"></div>
-<script type="module" src="/src/main.jsx"></script>
+---
 
-So adhai change panna vendam. Existing file-a appadiye keep pannunga.
+## 🚀 Live Demo
 
-Ippo files status
-File	Status
-main.py	✅ Modified
-main.jsx	✅ Modified
-styles.css	✅ Modified
-index.html	✅ No change needed
-package.json	✅ No change needed
-README.md	⏭️ Optional
+🌐 Frontend: https://weather-gpt-rose.vercel.app/
 
-Next important step: package.json check pannitu, app run aaguradhukku required dependencies irukka-nu verify pannuvom.
+☁️ Backend: https://weathergpt-backend-201b.onrender.com/
 
-nxt
+---
 
-Next package.json. ❤️
+## ✨ Features
 
-இதுல new dependency add panna thevai illa. Already React, Vite, and lucide-react irukku, so current features-ku sufficient.
+### 🌤️ Weather Information
+- Real-time weather information
+- Current temperature
+- Feels-like temperature
+- Humidity
+- Wind speed
+- Precipitation
+- Weather condition
 
-So package.json-a change panna vendam. ✅
+### 🔎 Location Search
+- Search weather by city or location
+- Automatic location detection
+- Current location weather using browser geolocation
 
-Ippo remaining:
-main.py ✅
-main.jsx ✅
-styles.css ✅
-index.html ✅
-package.json ✅
+### 📅 Forecast
+- 7-day weather forecast
+- Hourly weather information
+- Sunrise and sunset timings
+- Weather charts and visualizations
 
-Next README.md optional documentation update mattum irukku. Adhu app functionality-ku necessary illa.
+### 💬 AI Weather Chat
+- Ask questions about weather using natural language
+- Rain-related guidance
+- Travel and outdoor activity guidance
+- Weather-based recommendations
+- Hourly forecast queries
+- AI-powered conversational responses
 
-So code side-la main modifications complete. 🔥
+### 🌾 Advisory Modules
 
-next
+#### 👨‍🌾 Farmers Advisory
+Provides weather-based information useful for agricultural activities.
 
-Next README.md modification ready. ✅
+#### 🌊 Marine Advisory
+Provides weather-related information useful for fishermen and marine activities.
 
-Added the implemented WeatherGPT features without changing the original setup instructions.
+#### 🚨 Disaster Advisory
+Provides weather-related safety information for severe weather situations.
 
-👉 
-Download modified README.md
+### 🌍 Other Features
+- 🌐 Multilingual support
+- 🎤 Voice input
+- 🔊 Voice output
+- 🌙 Dark / Light mode
+- ⭐ Favorite cities
+- 🌍 Compare multiple cities
+- 📱 Responsive design for mobile and desktop
 
-Ippo all required files modifications complete. 🔥 
+---
 
-README_modified.md
-Document
+## 🛠️ Tech Stack
 
-Library
-/
-README_modified.md
-WeatherGPT Frontend
+### Frontend
+- React.js
+- Vite
+- JavaScript
+- HTML5
+- CSS3
 
-A beginner-friendly React + Vite frontend inspired by the provided WeatherGPT design.
+### Backend
+- Python
+- FastAPI
+- Uvicorn
+- HTTPX
+- Pydantic
 
-Run
-Install Node.js.
-Open this folder in VS Code.
-Open Terminal.
-Run:
-npm install
-Then:
-npm run dev
-Open the localhost URL shown by Vite.
+### Weather API
+- Open-Meteo Weather API
+- Open-Meteo Geocoding API
 
-This version uses mock weather data. The chatbot has simple context/intent-based demo responses. Later, connect it to a FastAPI backend and a real weather API.
+### AI
+- Ollama
+- Llama 3.2 3B
 
-Enhanced features implemented in the existing project
-Ollama llama3.2:3b chat through the existing FastAPI backend
-GFS seamless model parameter for the live forecast
-30-day historical climate endpoint
-Forecast-derived risk intelligence
-Optional IMD district warning adapter (official warnings are kept separate)
-WRF integration contract endpoint
-Agriculture, aviation and marine advisory UI
-Existing multilingual UI and browser voice input/output are preserved
-Implemented Weather Intelligence Features
-GFS-based forecast intelligence
-7-day forecast details
-Weather risk and alert detection
-Optional IMD district warning integration
-30-day historical weather data
-Agriculture advisory
-Aviation advisory
-Marine advisory
-Ollama-powered weather chatbot
-Multilingual voice input/output
-Location search and current-location weather
-Dark mode
+### Deployment
+- Vercel - Frontend
+- Render - Backend
 
+### Version Control
+- Git
+- GitHub
 
+---
+
+## 🏗️ Project Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │      User           │
+                    │ Mobile / Desktop    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   React + Vite      │
+                    │     Frontend        │
+                    │      Vercel         │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │      FastAPI        │
+                    │      Backend        │
+                    │       Render        │
+                    └──────────┬──────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 │                           │
+                 ▼                           ▼
+        ┌─────────────────┐        ┌─────────────────┐
+        │   Open-Meteo    │        │  Local Ollama   │
+        │ Weather APIs    │        │   Llama 3.2     │
+        └─────────────────┘        └─────────────────┘

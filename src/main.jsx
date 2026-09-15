@@ -861,7 +861,7 @@ function getHourlyQuestionResponse(question, weather, location, language) {
   return `🕐 Next few hours in ${location}:\n${lines.join("\n")}`;
 }
 
-
+const API_BASE_URL = "https://weathergpt-backend-201b.onrender.com";
 // ============================================================
 // MAIN APP
 // ============================================================
@@ -928,7 +928,7 @@ const [favorites, setFavorites] = useState(() => {
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:8000/weather?latitude=${latitude}&longitude=${longitude}`
+        `${API_BASE_URL}/weather?latitude=${latitude}&longitude=${longitude}`
       );
 
       const data = await response.json();
@@ -1023,8 +1023,9 @@ const [favorites, setFavorites] = useState(() => {
 
     try {
 
+
       const response = await fetch(
-        `http://127.0.0.1:8000/search-location?name=${encodeURIComponent(
+        `${API_BASE_URL}/search-location?name=${encodeURIComponent(
           searchText
         )}`
       );
@@ -1147,7 +1148,7 @@ async function compareCities() {
     setError("");
 
     const response = await fetch(
-      `http://127.0.0.1:8000/search-location?name=${encodeURIComponent(compareCity)}`
+      `${API_BASE_URL}/search-location?name=${encodeURIComponent(compareCity)}`
     );
     const data = await response.json();
 
@@ -1161,7 +1162,7 @@ async function compareCities() {
       : place.name;
 
     const weatherResponse = await fetch(
-      `http://127.0.0.1:8000/weather?latitude=${place.latitude}&longitude=${place.longitude}`
+      `${API_BASE_URL}/weather?latitude=${place.latitude}&longitude=${place.longitude}`
     );
     const compareWeather = await weatherResponse.json();
 
@@ -1204,7 +1205,7 @@ async function loadFavoriteCity(city) {
     setError("");
 
     const response = await fetch(
-      `http://127.0.0.1:8000/search-location?name=${encodeURIComponent(city)}`
+      `${API_BASE_URL}/search-location?name=${encodeURIComponent(city)}`
     );
 
     const data = await response.json();
@@ -1602,7 +1603,7 @@ WEATHER ALERT RULES:
         setError("");
 
         const response = await fetch(
-          `http://127.0.0.1:8000/search-location?name=${encodeURIComponent(
+          `${API_BASE_URL}/search-location?name=${encodeURIComponent(
             detectedLocation
           )}`
         );
